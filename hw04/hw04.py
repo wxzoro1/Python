@@ -6,23 +6,26 @@ import tornado.web
 class MainHandler(tornado.web.RequestHandler):
     def get(self,x):
         #判断捕获变量
-        x = 9 if x == None else  int(x)
+        x = 9 if x == None else int(x)
         y = int(self.get_argument('n',10))
-        if  0<y<10:
+        if  y != 10:
+            x = None
+        if  0 < y < 10:
             x = y
         #html结构
         html = '''
         <html>
         <body>
         '''
-        for a in range(x,0,-1):
-            for b in range (a,0,-1):
-                if a*b>=10:
-                    html += '<td>' + str("%d*%d=%-100d" % (a,b,a*b)) + '&nbsp;&nbsp;' + '</td>'              
-                else:
-                    html += '<td>' + str("%d*%d=%-100d" % (a,b,a*b)) + '&nbsp;&nbsp;&nbsp;&nbsp;' + '</td>'
-            html += '</br>'
-        html += '''      
+        if  0 < x < 10:
+            for a in range(x,0,-1):
+                for b in range (a,0,-1):
+                    if a*b>=10:
+                        html += '<td>' + str("%d*%d=%-100d" % (a,b,a*b)) + '&nbsp;&nbsp;' + '</td>'              
+                    else:
+                        html += '<td>' + str("%d*%d=%-100d" % (a,b,a*b)) + '&nbsp;&nbsp;&nbsp;&nbsp;' + '</td>'
+                html += '</br>'
+            html += '''      
         </body>
         </html>'''
         #写入
